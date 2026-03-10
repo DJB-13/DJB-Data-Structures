@@ -1,0 +1,670 @@
+class Darray:
+
+    def __init__(self, l:list):
+        self.l = l
+
+    def pop(self):
+        del self.l[-1]
+    
+    def bop(self):
+        del self.l[0]
+    
+    def getIndex(self, value):
+        for i in self.l:
+            if i == value:
+                for j in range(len(self.l)):
+                    if self.l[j] == value:
+                        return j + 1
+        return None
+    
+    def index(self, index):
+        l = list(self.l)
+        return Darray(l[index - 1])
+
+    def combine(self, other):
+        if len(self) != len(other):
+            return None
+        new = zip(self, other)
+        return dict(new)
+    
+    def isBlank(self):
+        if any(self.l):
+            return False
+        return True
+    
+    def isEmpty(self):
+        for i in self.l:
+            if i != None or i != False:
+                return False
+        return True
+    
+    def hasBlank(self):
+        if all(self.l):
+            return False
+        return True
+    
+    def hasEmpty(self):
+        for i in self.l:
+            if i == None or i == False:
+                return True
+        return False
+    
+    def count(self, value):
+        return self.l.count(value)
+    
+    def has(self, value):
+        for i in self.l:
+            if i == value:
+                return True
+        return False
+    
+    def add(self, value):
+        self.l.append(value)
+    
+    def adds(self, value: list):
+        self.l.extend(value)
+
+    def isBin(self):
+        for i in self.l:
+            if i not in [0, 1]:
+                return False
+        return True
+    
+    def total(self):
+        if self.l.isNum():
+            return sum(self.l)
+
+    def product(self):
+        try:
+            f = 1
+            for i in self.l:
+                f *= i
+            return f
+        except Exception:
+            return None
+    
+    def inLimit(self, upper_limit: float, lower_limit: float):
+        if max(self.l) > upper_limit or min(self.l) < lower_limit:
+            return False
+        return True
+    
+    def max(self):
+        return max(self.l)
+
+    def min(self):
+        return min(self.l)
+
+    def average(self):
+        try:
+            return sum(self.l)/len(self.l)
+        except Exception:
+            raise ZeroDivisionError(f"Empty list: '{self.l}' cannot be averaged.")
+    
+    def delete(self, index: int, direction: int):
+        if direction % 2 == 1:
+            del self.l[index - 1]
+        else:
+            del self.l[(index - 1) * -1]
+
+    def poke(self, index, value):
+        self.l.insert(index - 1, value)
+
+    def isHex(self):
+        num = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'A', 'b', 'B', 'c', 'C', 'd', 'D', 'e', 'E', 'f', 'F']
+        for i in self.l:
+            if i not in num:
+                return False
+        return True
+    
+    def isOct(self):
+        num = [0, 1, 2, 3, 4, 5, 6, 7]
+        for i in self.l:
+            if i not in num:
+                return False
+        return True
+    
+    def isDec(self):
+        num = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+        for i in self.l:
+            if i not in num:
+                return False
+        return True
+
+    def isRomanNum(self):
+        num = ['I', 'V', 'X', 'L', 'C', 'D', 'M']
+        for i in self.l:
+            for j in i:
+                if j not in num:
+                    return False
+        return True
+    
+    def isNum(self):
+        for i in self.l:
+            try:
+                assert i/1
+            except Exception:
+                return False
+        return True
+    
+    def isInt(self):
+        for i in self.l:
+            if i - int(i) != 0:
+                return False
+        return True
+    
+    def isSingle(self):
+        for i in self.l:
+            if len(i) != 1:
+                return False
+        return True
+    
+    def isNone(self):
+        if len(self.l) == 0:
+            return True
+        return False
+    
+    def flip(self):
+        self.l.reverse()
+
+    def sort(self):
+        self.l.sort()
+
+    def shuffle(self):
+        import random
+        random.shuffle(self.l)
+
+    def choice(self):
+        import random
+        return random.choice(self.l)
+    
+    def prepend(self, value):
+        new = self.l
+        self.l = []
+        self.l.append(value)
+        self.l.extend(new)
+        del new
+
+    def giveNum(self):
+        new = []
+        try:
+            for i in self.l:
+                new.append(float(i))
+            return Darray(new)
+        except Exception:
+            raise ValueError('The Darray cointains non-floating characters')
+
+    def giveStr(self):
+        new = []
+        for i in self.l:
+            new.append(str(i))
+        return Darray(new)
+
+    def Empty(self):
+        self.l = []
+
+    def is2DCor(self):
+        if Darray(self.l).isNum():
+            if len(self.l) == 2:
+                return True
+        return False
+    
+    def is3DCor(self):
+        if Darray(self.l).isNum():
+            if len(self.l) == 3:
+                return True
+        return False
+    
+    def compress(self):
+        l = str(self.l)
+        a = l.replace(' ', '')
+        b = a.replace(',', '')
+        c = b.replace('[', '')
+        d = c.replace(']', '')
+        e = d.replace("'", '')
+        return e
+    
+    def removeFrom(self, start : int, end : int, step=1):
+        if start == 0:
+            raise IndexError('Darray indexing cannot have 0')
+        l = list(self.l)
+        del l[start - 1 : end : step]
+        return Darray(l)
+
+    def after(self, value):
+        l = list(self.l)
+        return Darray(l[value:])
+    
+    def start(self, value):
+        l = list(self.l)
+        return Darray(l[:value])
+
+    def subs(self, start, end, step = 1):
+        if start == 0:
+            raise IndexError('Darray indexing cannot have 0')
+        l = list(self.l)
+        return Darray(l[start - 1 : end + 1 : step])
+    
+    def do(self, func):
+        new = [func(x) for x in self.l]
+        return Darray(new)
+
+    def apply(self, func):
+        new = [x for x in self.l if func(x)]
+        return Darray(new)
+
+    def belist(self):
+        return list(self.l)
+
+    def addcast(self, value):
+        try:
+            new = []
+            for i in self.l:
+                new.append(i + value)
+            return Darray(new)
+        except Exception:
+            return self.l
+        
+    def subcast(self, value):
+        try:
+            new = []
+            for i in self.l:
+                new.append(i - value)
+            return Darray(new)
+        except Exception:
+            return self.l
+        
+    def mulcast(self, value):
+        try:
+            new = []
+            for i in self.l:
+                new.append(i * value)
+            return Darray(new)
+        except Exception:
+            return self.l
+        
+    def divcast(self, value):
+        try:
+            new = []
+            for i in self.l:
+                new.append(i / value)
+            return Darray(new)
+        except Exception:
+            return self.l
+        
+    def floordivcast(self, value):
+        try:
+            new = []
+            for i in self.l:
+                new.append(i // value)
+            return Darray(new)
+        except Exception:
+            return self.l
+        
+    def modcast(self, value):
+        try:
+            new = []
+            for i in self.l:
+                new.append(i % value)
+            return Darray(new)
+        except Exception:
+            return self.l
+        
+    def powcast(self, value):
+        try:
+            new = []
+            for i in self.l:
+                new.append(i ** value)
+            return Darray(new)
+        except Exception:
+            return self.l
+
+    def __str__(self):
+        return f'{self.l}'
+    
+    def __iter__(self):
+        for i in self.l:
+            yield i
+    
+    def __len__(self):
+        return len(self.l)
+    
+    def __add__(self, other):
+        return Darray(self.l + other.l)
+
+    def __sub__(self, other):
+        return Darray(self.l - other.l)
+    
+    def __mul__(self, value):
+        return Darray(self.l * value)
+
+    def __getitem__(self, index):
+        if index == 0:
+            raise IndexError('Darray indexing cannot have 0')
+        return self.l[index - 1]
+    
+    def __contains__(self, value):
+        return value in self.l
+
+    def help():
+        print('1 index system')
+
+class Dtr:
+
+    def __init__(self, s:str):
+        self.s = s
+
+    def pop(self):
+        del self.s[-1]
+    
+    def bop(self):
+        del self.s[0]
+    
+    def getIndex(self, value):
+        for i in self.s:
+            if i == value:
+                for j in range(len(self.s)):
+                    if self.s[j] == value:
+                        return j + 1
+        return None
+    
+    def index(self, index):
+        l = str(self.s)
+        return Darray(l[index - 1])
+    
+    def isBlank(self):
+        if any(self.s):
+            return False
+        return True
+    
+    def isEmpty(self):
+        for i in self.s:
+            if i != None or i != False:
+                return False
+        return True
+    
+    def hasBlank(self):
+        if all(self.s):
+            return False
+        return True
+    
+    def hasEmpty(self):
+        for i in self.s:
+            if i == None or i == False:
+                return True
+        return False
+    
+    def count(self, value, start, end):
+        return self.s.count(value, start - 1, end + 1)
+    
+    def has(self, value):
+        for i in self.s:
+            if i == value:
+                return True
+        return False
+    
+    def add(self, value):
+        self.s += value
+
+    def isBin(self):
+        for i in self.s:
+            if i not in [0, 1]:
+                return False
+        return True
+    
+    def total(self):
+        if self.s.isNum():
+            return sum(list(self.s))
+
+    def product(self):
+        try:
+            f = 1
+            for i in self.s:
+                f *= i
+            return f
+        except Exception:
+            return None
+
+    def max(self):
+        return max(self.l)
+
+    def min(self):
+        return min(self.l)
+
+    def delete(self, index: int, direction: int):
+        if direction % 2 == 1:
+            del self.l[index - 1]
+        else:
+            del self.l[(index - 1) * -1]
+
+    def poke(self, index, value):
+        l = list(self.s)
+        l.insert(index - 1, value)
+        new = ''
+        for i in l:
+            if i == '[' or i ==']' or i == ',' or i == ' ' or i == "'":
+                continue
+            else:
+                new += i
+        return Dtr(new)
+        
+
+    def isHex(self):
+        num = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'A', 'b', 'B', 'c', 'C', 'd', 'D', 'e', 'E', 'f', 'F']
+        for i in self.s:
+            if i not in num:
+                return False
+        return True
+    
+    def isOct(self):
+        num = [0, 1, 2, 3, 4, 5, 6, 7]
+        for i in self.s:
+            if i not in num:
+                return False
+        return True
+    
+    def isDec(self):
+        num = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+        for i in self.s:
+            if i not in num:
+                return False
+        return True
+
+    def isRomanNum(self):
+        num = ['I', 'V', 'X', 'L', 'C', 'D', 'M']
+        for i in self.s:
+            if i not in num:
+                return False
+        return True
+    
+    def isNum(self):
+        for i in self.s:
+            try:
+                assert i/1
+            except Exception:
+                return False
+        return True
+    
+    def isInt(self):
+        for i in self.s:
+            if i - int(i) != 0:
+                return False
+        return True
+    
+    def isSingle(self):
+        if len(self.s) != 1:
+            return False
+        return True
+    
+    def isNone(self):
+        if len(self.s) == 0:
+            return True
+        return False
+    
+    def flip(self):
+        return Dtr(self.s[::-1])
+
+    def shuffle(self):
+        import random
+        new = ''
+        x = list(self.s)
+        random.shuffle(x)
+        for i in x:
+            new += i
+        return new
+
+    def choice(self):
+        import random
+        return random.choice(list(self.s))
+    
+    def prepend(self, value):
+        new = self.s
+        self.s = ''
+        self.s += value
+        self.s += new
+        return Dtr(self.s)
+
+    def giveNum(self):
+        try:
+            return Dtr(float(self.s))
+        except Exception:
+            raise ValueError('The Dtr cointains non-floating characters')
+
+    def Empty(self):
+        self.s = ''
+
+    def compress(self):
+        l = self.s
+        a = l.replace(' ', '')
+        b = a.replace(',', '')
+        c = b.replace('[', '')
+        d = c.replace(']', '')
+        e = d.replace("'", '')
+        return e
+    
+    def removeFrom(self, start : int, end : int, step=1):
+        if start == 0:
+            raise IndexError('Dtr indexing cannot have 0')
+        l = str(self.s)
+        del l[start - 1 : end : step]
+        return Dtr(l)
+
+    def after(self, value):
+        if value == 0:
+            raise IndexError('Dtr indexing cannot have 0')
+        l = list(self.s)
+        s = Darray(l[value:])
+        new = s.compress()
+        return new
+    
+    def start(self, value):
+        if value == 0:
+            raise IndexError('Dtr indexing cannot have 0')
+        l = list(self.s)
+        s = Darray(l[:value])
+        new = s.compress()
+        return new
+
+    def subs(self, start, end, step = 1):
+        if start == 0:
+            raise IndexError('Dtr indexing cannot have 0')
+        l = list(self.s)
+        s = Darray(l[start - 1: end + 1: step])
+        new = s.compress()
+        return new
+    
+    def belist(self):
+        return list(self.s)
+
+    def __str__(self):
+        return f'{self.s}'
+    
+    def __iter__(self):
+        for i in self.s:
+            yield i
+    
+    def __len__(self):
+        return len(self.s)
+    
+    def __add__(self, other):
+        return Dtr(self.s + other.s)
+
+    def __sub__(self, other):
+        return Dtr(self.s.replace(other.s, ''))
+    
+    def __mul__(self, value):
+        return Dtr(self.s * value)
+
+    def __getitem__(self, index):
+        if index == 0:
+            raise IndexError('Darray indexing cannot have 0')
+        return self.s[index - 1]
+    
+    def __contains__(self, value):
+        return value in self.s
+
+    def help():
+        print('1 index system') 
+    
+class Drange:
+
+    def __init__(self, start, end, step=1):
+        self.start = start
+        self.end = end
+        self.step = step
+        
+    def __str__(self):
+        l = []
+        i = self.start
+        while i <= self.end:
+            l.append(i)
+            i += self.step
+        return f'{Darray(l)}'
+    
+    def __iter__(self):
+        i = self.start
+        while i <= self.end:
+            yield round(i, 10)
+            i += self.step
+
+    def __reversed__(self):
+        i = self.end
+        while i >= self.start:
+            yield round(i, 10)
+            i -= self.step
+
+    def randomized(self):
+        import random
+        l = []
+        i = self.start
+        while i <= self.end:
+            l.append(i)
+            i += self.step
+        random.shuffle(l)
+        return Darray(l)
+
+    def midpoint(self):
+        return (self.start + self.end) / 2
+        
+    def span(self):
+        return self.end - self.start
+    
+    def noofiter(self):
+        return int(round((self.end - self.start) / self.step, 10) + 1)
+
+    def do(self, func):
+        l = []
+        i = self.start
+        while i <= self.end:
+            l.append(i)
+            i += self.step
+        new = [func(x) for x in l]
+        return Darray(new)
+
+    def apply(self, func):
+        l = []
+        i = self.start
+        while i <= self.end:
+            l.append(i)
+            i += self.step
+        new = [x for x in l if func(x)]
+        return Darray(new)
